@@ -10,13 +10,13 @@ add_subdirectory(extern/fmt)
 include_directories("include")
 include_directories("extern/fmt/include")
 
-file(GLOB_RECURSE SRC CONFIGURE_DEPENDS main.cpp src/*.h src/*.cpp)
+# the library
+add_library(global-optimization-lib INTERFACE)
+target_include_directories(global-optimization-lib INTERFACE .)
 
-
-add_library(global-optimization-lib ${SRC})
-target_link_libraries(global-optimization-lib PRIVATE fmt::fmt-header-only)
-
-#add_executable(global-optimization-exe ${SRC})
-#target_link_libraries(global-optimization-exe PRIVATE fmt::fmt-header-only)
+# the executable
+file(GLOB_RECURSE SRC_EXE CONFIGURE_DEPENDS main.cpp include/gopt/*.h include/gopt/*.cpp)
+add_executable(global-optimization-exe ${SRC_EXE})
+target_link_libraries(global-optimization-exe PRIVATE fmt::fmt-header-only)
 
 

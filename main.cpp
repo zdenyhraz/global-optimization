@@ -2,13 +2,12 @@
 #include <chrono>
 
 #include <fmt/format.h>
-
-#include "OptimizationAlgorithm.h"
-#include "MultilevelCoordinateSearch.h"
+#include <gopt/MultilevelCoordinateSearch.h>
 
 int main()
 try
 {
+  fmt::print("Running gopt test...\n");
   const auto f = [](const std::vector<double>& params) { return params.size(); };
   const std::vector<double> lb = {0, 0};
   const std::vector<double> ub = {0, 1};
