@@ -60,8 +60,8 @@ public:
 
 protected:
   int mDimensionality;
-  int mMaxFunctionEvaluations = std::numeric_limits<int>::infinity();
-  ReturnValue mOptimalFunctionValue = -std::numeric_limits<ReturnValue>::infinity();
+  int mMaxFunctionEvaluations = std::numeric_limits<int>::max();
+  ReturnValue mOptimalFunctionValue = std::numeric_limits<ReturnValue>::lowest();
   Parameters mLowerBounds;
   Parameters mUpperBounds;
   OptimizationOutputs mOutputs;
