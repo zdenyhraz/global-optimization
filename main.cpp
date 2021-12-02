@@ -2,7 +2,7 @@
 #include <chrono>
 
 #include <fmt/format.h>
-#include <gopt/MultilevelCoordinateSearch.h>
+#include <globalopt/MultilevelCoordinateSearch.h>
 
 int main()
 try
