@@ -10,7 +10,11 @@ public:
 
   MultilevelCoordinateSearch(const Parameters& lowerBounds, const Parameters& upperBounds) : OptimizationAlgorithm<ReturnValue, Parameters>(lowerBounds, upperBounds) {}
 
-  OptimizationResult Optimize(const ObjectiveFunction& f) override { return OptimizationResult(); }
+  OptimizationResult Optimize(const ObjectiveFunction& f) override
+  {
+    fmt::print("MultilevelCoordinateSearch::Optimize()\n");
+    return OptimizationResult();
+  }
 
 private:
 };

@@ -1,2 +1,1 @@
-# global-optimization
-Global non-convex optimization algorithms
+# Global non-convex optimization algorithms
