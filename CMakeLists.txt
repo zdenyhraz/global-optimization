@@ -7,13 +7,14 @@ set(CMAKE_CXX_FLAGS "-pthread -fvisibility=hidden")
 
 add_subdirectory(extern/fmt)
 
-include_directories("src")
+include_directories("include")
 include_directories("extern/fmt/include")
 
 file(GLOB_RECURSE SRC CONFIGURE_DEPENDS main.cpp src/*.h src/*.cpp)
 
+add_library(global-optimization ${SRC})
 
-add_executable(global-optimization ${SRC})
-target_link_libraries(global-optimization PRIVATE ${PYTHON_LIBRARIES} fmt::fmt-header-only)
+#add_executable(global-optimization-exe ${SRC})
+#target_link_libraries(global-optimization-exe PRIVATE ${PYTHON_LIBRARIES} fmt::fmt-header-only)
 
 
