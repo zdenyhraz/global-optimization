@@ -5,18 +5,25 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-pthread -fvisibility=hidden")
 
-add_subdirectory(extern/fmt EXCLUDE_FROM_ALL)
+get_directory_property(TOP_LEVEL_PROJECT PARENT_DIRECTORY)
+
+if(NOT TOP_LEVEL_PROJECT)
+  add_subdirectory(extern/fmt)
+endif()
 
 include_directories("include")
 include_directories("extern/fmt/include")
+
 
 # the library
 add_library(globalopt INTERFACE)
 add_library(globalopt::globalopt ALIAS globalopt)
 target_include_directories(globalopt INTERFACE .)
+target_link_libraries(globalopt INTERFACE fmt::fmt-header-only)
+
 
 # the executable
-add_executable(globalopt-exe main.cpp)
-target_link_libraries(globalopt-exe PRIVATE fmt::fmt-header-only globalopt)
+add_executable(globalopt-test main.cpp)
+target_link_libraries(globalopt-test PRIVATE fmt::fmt-header-only globalopt)
 
 

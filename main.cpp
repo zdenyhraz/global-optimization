@@ -7,7 +7,7 @@
 int main()
 try
 {
-  fmt::print("Running gopt test...\n");
+  fmt::print("Running <globalopt> test...\n");
   const auto f = [](const std::vector<double>& params) { return params.size(); };
   const std::vector<double> lb = {0, 0};
   const std::vector<double> ub = {0, 1};
