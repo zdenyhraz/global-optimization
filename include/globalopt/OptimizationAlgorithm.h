@@ -6,43 +6,46 @@
 
 #include <fmt/format.h>
 
-template <typename ReturnValue, typename Parameters>
+template <typename ReturnValue = double, typename Parameters = std::vector<double>>
 class OptimizationAlgorithm
 {
 public:
   using ObjectiveFunction = std::function<ReturnValue(const Parameters&)>;
 
-  enum TerminationReason
+  enum TerminationReasonType
   {
-    NotTerminated,
-    NoImprovementReached,
+    Unknown,
     OptimalFunctionValueReached,
     MaximumFunctionEvaluationsReached,
-    UnexpectedErrorOccured,
+    NoImprovementReached,
+    ErrorOccured,
   };
 
   struct OptimizationResult
   {
     Parameters optimum;
-    ReturnValue objectiveFunctionValue;
-    TerminationReason terminationReason;
+    ReturnValue objectiveFunctionValue = std::numeric_limits<ReturnValue>::infinity();
+    TerminationReasonType terminationReasonType = Unknown;
+    std::string terminationReason = "Unknown";
   };
 
   struct OptimizationOutputs
   {
-    bool consoleOutput = true;
+    bool consoleOutput = false;
     bool plotOutput = false;
     bool fileOutput = false;
     bool saveProgress = false;
   };
 
-  OptimizationAlgorithm(const Parameters& lowerBounds, const Parameters& upperBounds) : mDimensionality(lowerBounds.size()), mLowerBounds(lowerBounds), mUpperBounds(upperBounds)
+  OptimizationAlgorithm(const std::string& name, const Parameters& lowerBounds, const Parameters& upperBounds)
+      : mName(name), mDimensionality(lowerBounds.size()), mLowerBounds(lowerBounds), mUpperBounds(upperBounds)
   {
-    if (lowerBounds.empty() or upperBounds.empty())
+    if (lowerBounds.size() != upperBounds.size() or lowerBounds.empty() or upperBounds.empty())
       throw std::runtime_error(fmt::format("Bad lower/upper bounds dimensionality ({}/{})", lowerBounds.size(), upperBounds.size()));
 
-    if (lowerBounds.size() != upperBounds.size())
-      throw std::runtime_error(fmt::format("Lower/upper bounds dimension mismatch ({}/{})", lowerBounds.size(), upperBounds.size()));
+    for (int dimension = 0; dimension < lowerBounds.size(); dimension++)
+      if (lowerBounds[dimension] >= upperBounds[dimension])
+        throw std::runtime_error(fmt::format("Bad lower/upper bounds values ({}/{}) for dimension {}", lowerBounds[dimension], upperBounds[dimension], dimension));
   }
 
   virtual ~OptimizationAlgorithm() = default;
@@ -58,6 +61,8 @@ public:
   void SetMaxFunctionEvaluations(int maxFunctionEvaluations) { mMaxFunctionEvaluations = maxFunctionEvaluations; }
   void SetParameterNames(const std::vector<std::string>& parameterNames) { mParameterNames = parameterNames; }
 
+  const std::string& GetName() { return mName; }
+
 protected:
   int mDimensionality;
   int mMaxFunctionEvaluations = std::numeric_limits<int>::infinity();
@@ -67,4 +72,28 @@ protected:
   OptimizationOutputs mOutputs;
   std::string mName;
   std::vector<std::string> mParameterNames;
+};
+
+template <typename T>
+struct fmt::formatter<std::vector<T>>
+{
+  template <typename ParseContext>
+  constexpr auto parse(ParseContext& ctx)
+  {
+    return ctx.begin();
+  }
+
+  template <typename FormatContext>
+  constexpr auto format(const std::vector<T>& vec, FormatContext& ctx)
+  {
+    if (vec.empty())
+      return fmt::format_to(ctx.out(), "[]");
+
+    fmt::format_to(ctx.out(), "[");
+    for (int i = 0; i < vec.size() - 1; ++i)
+    {
+      fmt::format_to(ctx.out(), "{}, ", vec[i]);
+    }
+    return fmt::format_to(ctx.out(), "{}]", vec[vec.size() - 1]);
+  }
 };
