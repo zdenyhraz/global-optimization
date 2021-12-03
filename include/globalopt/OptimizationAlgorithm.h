@@ -23,10 +23,10 @@ public:
 
   struct OptimizationResult
   {
-    Parameters optimum;
     ReturnValue objectiveFunctionValue = std::numeric_limits<ReturnValue>::infinity();
-    TerminationReasonType terminationReasonType = Unknown;
+    Parameters optimum;
     std::string terminationReason = "Unknown";
+    TerminationReasonType terminationReasonType = Unknown;
   };
 
   struct OptimizationOutputs

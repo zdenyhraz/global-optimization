@@ -28,7 +28,12 @@ try
     results[optimizer->GetName()] = optimizer->Optimize(f);
 
   for (const auto& [optimizerName, result] : results)
-    fmt::print("[globalopt] {}: result: {:.2e}, optimum: {}, termination reason: {}\n", optimizerName, result.objectiveFunctionValue, result.optimum, result.terminationReason);
+  {
+    fmt::print("[globalopt] {}:\n", optimizerName);
+    fmt::print("[globalopt]   - Result: {}\n", result.objectiveFunctionValue);
+    fmt::print("[globalopt]   - Optimum: {}\n", result.optimum);
+    fmt::print("[globalopt]   - Termination reason: {}\n", result.terminationReason);
+  }
 
   fmt::print("[globalopt] Test finished successfully\n");
   return EXIT_SUCCESS;
