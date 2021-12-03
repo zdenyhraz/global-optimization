@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-pthread -fvisibility=hidden")
 
-get_directory_property(TOP_LEVEL_PROJECT PARENT_DIRECTORY)
+get_directory_property(SUB_PROJECT PARENT_DIRECTORY)
 
-if(NOT TOP_LEVEL_PROJECT)
+if(NOT SUB_PROJECT)
   add_subdirectory(extern/fmt)
 endif()
 

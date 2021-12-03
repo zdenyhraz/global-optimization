@@ -33,7 +33,7 @@ try
     fmt::print("[globalopt] {}:\n", optimizerName);
     fmt::print("[globalopt]   - Result: {}\n", result.objectiveFunctionValue);
     fmt::print("[globalopt]   - Optimum: {}\n", result.optimum);
-    fmt::print("[globalopt]   - Termination reason: {}\n", result.terminationReason);
+    fmt::print("[globalopt]   - Termination message: {}\n", result.terminationMessage);
   }
 
   fmt::print("[globalopt] Tests finished successfully\n");

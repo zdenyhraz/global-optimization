@@ -12,7 +12,7 @@ class OptimizationAlgorithm
 public:
   using ObjectiveFunction = std::function<ReturnValue(const Parameters&)>;
 
-  enum TerminationReasonType
+  enum TerminationReason
   {
     Unknown,
     OptimalFunctionValueReached,
@@ -25,8 +25,8 @@ public:
   {
     ReturnValue objectiveFunctionValue = std::numeric_limits<ReturnValue>::infinity();
     Parameters optimum;
-    std::string terminationReason = "Unknown";
-    TerminationReasonType terminationReasonType = Unknown;
+    TerminationReason terminationReason = Unknown;
+    std::string terminationMessage = "Unknown";
   };
 
   struct OptimizationOutputs
