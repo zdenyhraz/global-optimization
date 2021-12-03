@@ -23,7 +23,7 @@ target_link_libraries(globalopt INTERFACE fmt::fmt-header-only)
 
 
 # the executable
-add_executable(globalopt-test main.cpp)
+add_executable(globalopt-test test/test.cpp)
 target_link_libraries(globalopt-test PRIVATE fmt::fmt-header-only globalopt)
 
 
