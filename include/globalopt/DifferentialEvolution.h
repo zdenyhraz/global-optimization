@@ -1,6 +1,8 @@
 #pragma once
 #include "OptimizationAlgorithm.h"
 
+namespace globalopt
+{
 template <typename ReturnValue = double, typename Parameters = std::vector<double>>
 class DifferentialEvolution : public OptimizationAlgorithm<ReturnValue, Parameters>
 {
@@ -18,3 +20,4 @@ public:
 
 private:
 };
+}

@@ -6,9 +6,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-#include <globalopt/PatternSearch.h>
-#include <globalopt/DifferentialEvolution.h>
-#include <globalopt/MultilevelCoordinateSearch.h>
+#include <globalopt/globalopt.h>
 
 int main()
 try
@@ -19,12 +17,12 @@ try
   const std::vector<double> lb = {0, 0};
   const std::vector<double> ub = {1, 1};
 
-  std::vector<std::unique_ptr<OptimizationAlgorithm<>>> optimizers;
-  optimizers.push_back(std::make_unique<PatternSearch<>>("PatternSearch", lb, ub));
-  optimizers.push_back(std::make_unique<DifferentialEvolution<>>("DifferentialEvolution", lb, ub));
-  optimizers.push_back(std::make_unique<MultilevelCoordinateSearch<>>("MultilevelCoordinateSearch", lb, ub));
+  std::vector<std::unique_ptr<globalopt::OptimizationAlgorithm<>>> optimizers;
+  optimizers.push_back(std::make_unique<globalopt::PatternSearch<>>("PatternSearch", lb, ub));
+  optimizers.push_back(std::make_unique<globalopt::DifferentialEvolution<>>("DifferentialEvolution", lb, ub));
+  optimizers.push_back(std::make_unique<globalopt::MultilevelCoordinateSearch<>>("MultilevelCoordinateSearch", lb, ub));
 
-  std::map<std::string, OptimizationAlgorithm<>::OptimizationResult> results;
+  std::map<std::string, globalopt::OptimizationAlgorithm<>::OptimizationResult> results;
   for (const auto& optimizer : optimizers)
     results[optimizer->GetName()] = optimizer->Optimize(f);
 

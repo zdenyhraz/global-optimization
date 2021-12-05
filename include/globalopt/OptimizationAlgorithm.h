@@ -6,6 +6,8 @@
 
 #include <fmt/format.h>
 
+namespace globalopt
+{
 template <typename ReturnValue = double, typename Parameters = std::vector<double>>
 class OptimizationAlgorithm
 {
@@ -73,6 +75,7 @@ protected:
   std::string mName;
   std::vector<std::string> mParameterNames;
 };
+}
 
 template <typename T>
 struct fmt::formatter<std::vector<T>>
